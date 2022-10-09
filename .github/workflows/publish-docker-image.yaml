@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkt@v2
+    - uses: actions/checkout@v3.1.0
     - name: docker login
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
