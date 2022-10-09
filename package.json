@@ -1,0 +1,23 @@
+{
+  "name": "vc-role-bot",
+  "version": "1.0.0",
+  "description": "A bot that will assign and remove a user's role upon joining/leaving a Discord voice chat",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node .",
+    "lint": "eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Fritzz",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/rest": "^1.2.0",
+    "discord-api-types": "^0.37.11",
+    "discord.js": "^14.5.0",
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.24.0"
+  }
+}
