@@ -10,7 +10,7 @@ jobs:
 
     env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
-        DOCER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        DOCER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
         DOCER_REPO: ${{ secrets.DOCKER_HUB_REPO }}
 
     steps:
@@ -19,7 +19,7 @@ jobs:
       uses: docker/login-action@v2
       with:
         username: $DOCKER_USER
-        password: $DOCKER_PASSWORD
+        password: $DOCER_TOKEN
     - name: Build Docker image
       run: docker build . --file Dockerfile --tag $DOCKER_USER/$DOCKER_REPO:$(date +%s)
     - name: Docker Push
