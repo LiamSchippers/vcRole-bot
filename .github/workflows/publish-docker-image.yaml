@@ -6,7 +6,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  Deploy-Docker-Image:
     runs-on: ubuntu-latest
 
     env:
