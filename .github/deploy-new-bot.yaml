@@ -1,0 +1,43 @@
+name: Deploy bot
+on:
+  workflow_dispatch:
+env:
+  REPO_NAME: {{ github.event.repository.name }}
+jobs:
+  Install-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Installing Docker ${{ env.REPO_NAME }}
+        uses: fifsky/ssh-action@master
+          with:
+            command: |
+              sudo apt-get remove docker docker-engine docker.io containerd runc
+              sudo apt-get update
+              sudo apt-get install ca-certificates curl gnupg lsb-release
+              sudo mkdir -p /etc/apt/keyrings
+              curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+              echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+              sudo apt-get update
+              sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+              sudo service docker start
+            host: 144.202.9.135
+            user: root
+            key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+  Deploy-bot:
+    needs: [ Install-docke ]
+    runs-on: ubuntu-latest
+    env:
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        DOCER_REPO: ${{ secrets.DOCKER_HUB_REPO }}
+        VERSION: ${{ secrets.VERSION }}
+    steps:
+      - name: Deploy bot ${{ env.REPO_NAME }}
+        uses: fifsky/ssh-action@master
+          with:
+            command: |
+              sudo docker image pull ${{ DOCKER_USER }}/${{ DOCER_REPO }}:${{ VERSION }}
+              sudo docker run ${{ DOCKER_USER }}/${{ DOCER_REPO }}:${{ VERSION }} -e TOKEN=${{ secrets.BOT_TOKEN }} CLIENT_ID=${{ secrets.BOT_CLIENT_ID }}
+            host: 144.202.9.135
+            user: root
+            key: ${{ secrets.SSH_PRIVATE_KEY }}
