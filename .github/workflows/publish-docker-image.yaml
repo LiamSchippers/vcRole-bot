@@ -6,9 +6,7 @@ on:
     branches: [ main ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     env:
@@ -16,19 +14,20 @@ jobs:
         DOCER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
         DOCER_REPO: ${{ secrets.DOCKER_HUB_REPO }}
 
-    - name: Checkout 
-      uses: actions/checkout@v3
-    - name: Login to Docker Hub
-      uses: docker/login-action@v2
-      with:
-        username: $DOCKER_USER
-        password: $DOCER_TOKEN
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
-    - name: Build and push
-      uses: docker/build-push-action@v3
-      with:
-        context: .
-        file: ./Dockerfile
-        push: true
-        tags: $DOCKER_USER/$DOCER_REPO:latest
+    steps:
+      - name: Checkout 
+        uses: actions/checkout@v3
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: $DOCKER_USER
+          password: $DOCER_TOKEN
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: $DOCKER_USER/$DOCER_REPO:latest
