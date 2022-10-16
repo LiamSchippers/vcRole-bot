@@ -29,15 +29,15 @@ jobs:
     runs-on: ubuntu-latest
     env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
-        DOCER_REPO: ${{ secrets.DOCKER_HUB_REPO }}
+        DOKCER_REPO: ${{ secrets.DOCKER_HUB_REPO }}
         VERSION: ${{ secrets.VERSION }}
     steps:
       - name: Deploy bot ${{ env.REPO_NAME }}
         uses: fifsky/ssh-action@master
         with:
           command: |
-            sudo docker image pull ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_HUB_REPO }}}:${{ secrets.VERSION }}
-            sudo docker run ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_HUB_REPO }}}:${{ secrets.VERSION }} -e TOKEN=${{ secrets.BOT_TOKEN }} CLIENT_ID=${{ secrets.BOT_CLIENT_ID }}
+            sudo docker image pull ${{ env.DOCKER_USER }}/${{ env.DOCKER_REPO }}}:${{ env.VERSION }}
+            sudo docker run ${{ env.DOCKER_USER }}/${{ env.DOCKER_REPO }}}:${{ env.VERSION }} -e TOKEN=${{ secrets.BOT_TOKEN }} CLIENT_ID=${{ secrets.BOT_CLIENT_ID }}
           host: 144.202.9.135
           user: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
