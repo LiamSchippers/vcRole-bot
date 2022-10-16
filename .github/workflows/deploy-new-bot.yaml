@@ -25,7 +25,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
 
   Deploy-bot:
-    needs: [ Install-docke ]
+    needs: [ Install-docker ]
     runs-on: ubuntu-latest
     steps:
       - name: Deploy bot ${{ env.REPO_NAME }}
