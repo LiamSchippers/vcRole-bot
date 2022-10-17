@@ -11,15 +11,7 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: |
-            sudo apt-get remove docker docker-engine docker.io containerd runc
             sudo apt-get update
-            sudo apt-get install ca-certificates curl gnupg lsb-release
-            sudo mkdir -p /etc/apt/keyrings
-            curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-            echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-            sudo apt-get update
-            sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
-            sudo service docker start
           host: 144.202.9.135
           user: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -33,7 +25,7 @@ jobs:
         with:
           command: |
             sudo docker image pull ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_HUB_REPO }}:${{ secrets.VERSION }}
-            sudo docker run ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_HUB_REPO }}:${{ secrets.VERSION }} -e TOKEN=${{ secrets.BOT_TOKEN }} CLIENT_ID=${{ secrets.BOT_CLIENT_ID }}
+            sudo docker run -e TOKEN="${{ secrets.BOT_TOKEN }}" CLIENT_ID=${{ secrets.BOT_CLIENT_ID }}  ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_HUB_REPO }}:${{ secrets.VERSION }}
           host: 144.202.9.135
           user: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
