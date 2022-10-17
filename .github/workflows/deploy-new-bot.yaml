@@ -14,6 +14,7 @@ jobs:
             sudo apt-get update
             sudo docker stop vcrole_bot
             sudo docker rm vcrole_bot
+            sudo docker system prune
           host: 144.202.9.135
           user: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
