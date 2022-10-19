@@ -11,6 +11,6 @@ export default class VcRoles {
 
 	getRole(channelId) {
 		const vcRole = this.vcRoles.find(vcrole => vcrole.channel.id === channelId);
-		return vcRole === null ? null : vcRole.role;
+		return vcRole == null ? null : vcRole.role;
 	}
 }
