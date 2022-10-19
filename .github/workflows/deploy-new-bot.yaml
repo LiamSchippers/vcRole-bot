@@ -28,7 +28,7 @@ jobs:
         with:
           command: |
             sudo docker image pull ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_HUB_REPO }}:${{ secrets.VERSION }}
-            sudo docker run -e TOKEN="${{ secrets.BOT_TOKEN }}" -e CLIENT_ID=${{ secrets.BOT_CLIENT_ID }} --name vcrole_bot ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_HUB_REPO }}:${{ secrets.VERSION }} -d
+            sudo docker run -e TOKEN="${{ secrets.BOT_TOKEN }}" -e CLIENT_ID=${{ secrets.BOT_CLIENT_ID }} -d --name vcrole_bot ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_HUB_REPO }}:${{ secrets.VERSION }}
           host: 144.202.9.135
           user: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
