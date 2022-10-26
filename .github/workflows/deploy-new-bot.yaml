@@ -12,9 +12,9 @@ jobs:
         with:
           command: |
             sudo apt-get update
-            # sudo docker stop vcrole_bot
-            # sudo docker rm vcrole_bot
-            # sudo docker rmi vcrole_bot:latest
+            sudo docker stop vcrole_bot
+            sudo docker rm vcrole_bot
+            sudo docker rmi vcrole_bot:latest
           host: 144.202.9.135
           user: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
