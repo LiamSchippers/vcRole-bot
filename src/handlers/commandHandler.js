@@ -21,12 +21,13 @@ export default class CommandHandler {
 
 	async handleVcRoleCommand(interaction) {
 
-		if (interaction.memberPermissions.has('ADMINISTRATOR')) {
-			interaction.deleteReply();
+		await interaction.deferReply({ ephemeral: true });
+
+		if (!interaction.memberPermissions.has('ADMINISTRATOR')) {
+			await interaction.editReply('You aren\'t allowed to use this command');
 			return;
 		}
 
-		await interaction.deferReply();
 		this.vcRoles.addVcRole(interaction.options.getChannel('channel'), interaction.options.getRole('viewerrole'));
 		await interaction.editReply('VcRole set!');
 	}
