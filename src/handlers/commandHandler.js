@@ -14,11 +14,20 @@ export default class CommandHandler {
 				await interaction.reply('Pong!');
 				break;
 			case Command.VcRole.name:
-				await interaction.deferReply();
-				this.vcRoles.addVcRole(interaction.options.getChannel('channel'), interaction.options.getRole('viewerrole'));
-				await interaction.editReply('VcRole set!');
+				this.handleVcRoleCommand(interaction);
 				break;
 		}
+	}
 
+	async handleVcRoleCommand(interaction) {
+
+		if (interaction.memberPermissions.has('ADMINISTRATOR')) {
+			interaction.deleteReply();
+			return;
+		}
+
+		await interaction.deferReply();
+		this.vcRoles.addVcRole(interaction.options.getChannel('channel'), interaction.options.getRole('viewerrole'));
+		await interaction.editReply('VcRole set!');
 	}
 }
